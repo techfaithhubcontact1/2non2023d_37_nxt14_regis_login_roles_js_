@@ -1,95 +1,115 @@
-import Image from 'next/image'
-import styles from './page.module.css'
+"use client"
+//1. import area 
+// import { redirect } from "next/navigation";
 
-export default function Home() {
+import { useState } from "react";
+
+//2. defination area
+function Home() {
+  //1 hooks vaiable area
+  // const [var,function] = useState('text')
+  const [title,setTitile] = useState("Login System");
+  const [payload,setPayload] = useState({email:"",password:"",role:''});
+
+  //2 defination area 
+  //sumit function defined
+  const submit = ()=>{
+    console.log(payload.role);
+    if(payload.role === 'SystemAdmin') {
+      window.location.href = '/systemadmin/dashboard';
+      // redirect('/systemadmin/dashboard')
+    }
+    else if(payload.role === 'Reseller') {
+      window.location.href = '/reseller/dashboard';
+      // redirect('/systemadmin/dashboard')
+    }
+    else if(payload.role === 'EndUser') {
+      window.location.href = '/enduser/dashboard';
+      // redirect('/systemadmin/dashboard')
+    }
+    else if(payload.role === 'AccountManager') {
+      window.location.href = '/accountmanager/dashboard';
+      // redirect('/systemadmin/dashboard')
+    }
+  }
+
+    //handelChange function defined
+  var handelChange = (e)=>{
+    console.log(e.target.value)
+    if(e.target.value === 'SystemAdmin'){
+      setPayload({
+        ...payload,
+        email:"systemadmin@gmail.com",
+        password:"systemadmin@gmail.com",
+        role:'SystemAdmin'
+      });
+    }
+    if(e.target.value === 'Reseller'){
+      setPayload({
+        ...payload,
+        email:"reseller@gmail.com",
+        password:"reseller@gmail.com",
+        role:'Reseller'
+      });
+    }
+    if(e.target.value === 'EndUser'){
+      setPayload({
+        ...payload,
+        email:"enduser@gmail.com",
+        password:"enduser@gmail.com",
+        role:'EndUser'
+      });
+    }
+    if(e.target.value === 'AccountManager'){
+      setPayload({
+        ...payload,
+        email:"accountmanager@gmail.com",
+        password:"accountmanager@gmail.com",
+        role:'AccountManager'
+      });
+    }
+  }
+
+  //3. return statements
   return (
-    <main className={styles.main}>
-      <div className={styles.description}>
-        <p>
-          Get started by editing&nbsp;
-          <code className={styles.code}>src/app/page.js</code>
-        </p>
-        <div>
-          <a
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{' '}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className={styles.vercelLogo}
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
+    <>
+      {/* Login form stated here  */}
+      <div className="container">
+        <div className="card">
+          <div className="card-header text-center">
+            <h1 className="mt-10">{title}</h1>
+          </div>
+          <div className="card-body">
+            <form>
+              <div className="mb-3">
+                <label htmlFor="roles">Roles</label>
+                <select className="form-control" onChange={handelChange}>
+                  <option>SystemAdmin</option>
+                  <option>Reseller</option>
+                  <option>EndUser</option>
+                  <option>AccountManager</option>
+                </select>
+              </div>
+              <div className="mb-3">
+                <label htmlFor="exampleInputEmail1">EmailAddress</label>
+                <input type="email" className="form-control" id="email" name="email" aria-describedby="emailHelp" placeholder="Enter email" value={payload.email}/>
+              </div>
+              <div className="mb-3">
+                <label htmlFor="exampleInputPassword">Password</label>
+                <input type="password" className="form-control" id="Password" name="password" placeholder="Password" value={payload.password}/>
+              </div>  
+            </form>
+          </div>
+          <div className="card-footer text-center">
+            <button type="submit" className="btn btn-primary" onClick={submit}>Submit</button>
+          </div> 
         </div>
       </div>
 
-      <div className={styles.center}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
-      </div>
-
-      <div className={styles.grid}>
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Docs <span>-&gt;</span>
-          </h2>
-          <p>Find in-depth information about Next.js features and API.</p>
-        </a>
-
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Learn <span>-&gt;</span>
-          </h2>
-          <p>Learn about Next.js in an interactive course with&nbsp;quizzes!</p>
-        </a>
-
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Templates <span>-&gt;</span>
-          </h2>
-          <p>Explore the Next.js 13 playground.</p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Deploy <span>-&gt;</span>
-          </h2>
-          <p>
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
-      </div>
-    </main>
+    </>
   )
 }
+
+//3. export area
+//3.1default export 
+export default Home;
